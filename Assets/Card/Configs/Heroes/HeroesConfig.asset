@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4342e9df802c42d7a10c86c8aa9b422d, type: 3}
+  m_Name: HeroesConfig
+  m_EditorClassIdentifier: 
+  _heroConfigs:
+  - {fileID: 11400000, guid: bd1727e640a528a4da2ddd38f829e84b, type: 2}
+  - {fileID: 11400000, guid: ea918b34746d7224ba9805ab84315d21, type: 2}
+  - {fileID: 11400000, guid: 38e6de0ecfae92042adfbbec8da25bee, type: 2}
+  - {fileID: 11400000, guid: 2e8e1db54304c774cb7a203e77c6381b, type: 2}
+  - {fileID: 11400000, guid: 7a3dac851ebdc954ea9d650987b309eb, type: 2}
+  - {fileID: 11400000, guid: ee1a1c7b72a418a4c99c4362a607a989, type: 2}
+  - {fileID: 11400000, guid: 63d958d0d7e2f744d8937e9532c1b8b8, type: 2}
+  - {fileID: 11400000, guid: b03a92eeaf38f074e95f0f15d16a4a88, type: 2}
+  - {fileID: 11400000, guid: 8b89d5da172089f4faf08ec22015171e, type: 2}
+  - {fileID: 11400000, guid: a6d126cc55fdb9c47a7d27c2b5920803, type: 2}
+  - {fileID: 11400000, guid: ca127d37bbf90384484b9bb28c0d3972, type: 2}
+  - {fileID: 11400000, guid: 4a8d4dbd80dc6804c9abe00224f40d09, type: 2}
+  - {fileID: 11400000, guid: d7949699b283634488f5b8f389b89456, type: 2}
+  _enemiesConfigs:
+  - {fileID: 11400000, guid: 2e5f4a06f5193a3469ee505733fc43dd, type: 2}
+  - {fileID: 11400000, guid: b183e6366b1fd4d4898a7909f9b1bb07, type: 2}
+  - {fileID: 11400000, guid: d19cdd0cf8d7383458f1402766ffcb77, type: 2}
+  - {fileID: 11400000, guid: 3e0d9071ee47a94448f7126f0d0102d5, type: 2}
+  - {fileID: 11400000, guid: 8439daef2803c264eb54a9b4048783aa, type: 2}
+  - {fileID: 11400000, guid: bc4df0d81a8da5a4eb99eafbfd1e10d1, type: 2}
+  - {fileID: 11400000, guid: a4a7da1a138386b42bafe47a7ebd1c30, type: 2}
+  - {fileID: 11400000, guid: 8252070b9364c72489263bc88b5fd8ac, type: 2}
+  - {fileID: 11400000, guid: 6971db0dca6f3f948815573efa922281, type: 2}

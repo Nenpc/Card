@@ -1,0 +1,20 @@
+{
+    "name": "TheaCard.Core.Card",
+    "rootNamespace": "",
+    "references": [
+        "GUID:68ba891be9ddb0b448dc20471bb5743d",
+        "GUID:ce323acc0252e2848b8340a8b6c7af56",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:171898159aeee45469d0744cf6a4b702",
+        "GUID:f6a93ebec9faf6247b68953d7cbe64c9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
