@@ -12,6 +12,7 @@ namespace TheaCard.Core.GameState
         void MoveToMainField(IHeroModel hero);
         void AttackHero(IHeroModel hero, IHeroModel goal);
         void DestroyHero(IHeroModel hero);
+        void ClearAllCards();
         void Show();
         void Hide();
     }

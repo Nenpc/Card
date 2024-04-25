@@ -63,9 +63,11 @@ namespace TheaCard.Core.Heroes
 
         public void TakeDamage(int damage)
         {
-            if (_health <= 0) 
+            if (_health <= 0 || damage < _defense) 
                 return;
-            
+
+            damage -= _defense;
+
             _health = Mathf.Clamp(_health - damage, 0, _baseHealth);
             
             if (_health == 0)

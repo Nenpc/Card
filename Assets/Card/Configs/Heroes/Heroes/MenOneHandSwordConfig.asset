@@ -18,7 +18,7 @@ MonoBehaviour:
   _damageInfos:
   - _fightType: 1
     _damage: 6
-    _defense: 5
+    _defense: 4
     _health: 25
   - _fightType: 2
     _damage: 1
@@ -26,6 +26,6 @@ MonoBehaviour:
     _health: 10
   - _fightType: 3
     _damage: 2
-    _defense: 1
+    _defense: 0
     _health: 12
   _buff: 1

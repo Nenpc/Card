@@ -34,7 +34,7 @@ namespace TheaCard.Core.Initialize
             Container.Bind<IIntermediaryState<GameStates>>().To<GameStateSelectHand>().AsSingle().NonLazy();
             Container.Bind<IIntermediaryState<GameStates>>().To<GameStateFight>().AsSingle().NonLazy();
             
-            Container.Bind<IntermediaryAbstract<GameStates>>().To<GameStateIntermediary>().AsSingle().NonLazy();
+            Container.Bind<IIntermediary<GameStates>>().To<GameStateIntermediary>().AsSingle().NonLazy();
         }
 
         private void BindModel()
@@ -67,7 +67,7 @@ namespace TheaCard.Core.Initialize
             Container.Bind<IIntermediaryState<ProcessStates>>().To<PlayerSelectProcess>().AsSingle().NonLazy();
             Container.Bind<IIntermediaryState<ProcessStates>>().To<FightProcess>().AsSingle().NonLazy();
             
-            Container.Bind<IntermediaryAbstract<ProcessStates>>().To<ProcessIntermediary>().AsSingle().NonLazy();
+            Container.Bind<IIntermediary<ProcessStates>>().To<ProcessIntermediary>().AsSingle().NonLazy();
         }
 
         private void BindCard()

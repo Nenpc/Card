@@ -8,6 +8,7 @@ namespace TheaCard.Core.FightModel
         IReadOnlyList<IHeroConfig> HeroesConfig { get; }
         void AddHeroConfig(IHeroConfig hero);
         void RemoveHeroConfig(IHeroConfig hero);
+        void ClearAllHeroConfig();
         
         IReadOnlyList<IHeroModel> HeroesModel { get; }
         void AddHeroModel(IHeroModel hero);

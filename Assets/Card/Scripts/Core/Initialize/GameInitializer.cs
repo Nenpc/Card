@@ -6,9 +6,9 @@ namespace TheaCard.Core.Initialize
 {
     public sealed class GameInitializer : IInitializable
     {
-        private readonly IntermediaryAbstract<GameStates> _gameStateIntermediary;
+        private readonly IIntermediary<GameStates> _gameStateIntermediary;
 
-        public GameInitializer(IntermediaryAbstract<GameStates> gameStateIntermediary)
+        public GameInitializer(IIntermediary<GameStates> gameStateIntermediary)
         {
             _gameStateIntermediary = gameStateIntermediary;
         }

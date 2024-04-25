@@ -8,6 +8,7 @@ namespace TheaCard.Infrastructure.Intermediary
     public abstract class IntermediaryAbstract<TState> : IIntermediary<TState> where TState : Enum
     {
         public event Action<TState> OnStateChanged;
+        public event Action<TState> OnEndState;
 
         protected abstract TState FirstState { get; }
         protected abstract IEnumerable<IIntermediaryState<TState>> States { get; }
@@ -33,21 +34,22 @@ namespace TheaCard.Infrastructure.Intermediary
 
             if (state == default)
             {
-                Debug.LogError($"Logic for state {stateType} doesn't exist!");
+                Debug.LogWarning($"Logic for state {stateType} doesn't exist!");
                 return;
             }
-            state.OnEndState += OnEndState;
+            state.OnEndState += EndState;
             OnStateChanged?.Invoke(stateType);
             _activeState = state;
             state.Start();
         }
 
-        protected virtual void OnEndState(TState states)
+        protected virtual void EndState(TState states)
         {
             if (_active)
             {
-                _activeState.OnEndState -= OnEndState;
+                _activeState.OnEndState -= EndState;
                 _activeState.End();
+                OnEndState?.Invoke(_activeState.State);
                 StartState(GetNextState(_activeState.State));
             }
         }

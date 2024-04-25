@@ -1,4 +1,5 @@
-﻿using TheaCard.Core.Heroes;
+﻿using System.Collections.Generic;
+using TheaCard.Core.Heroes;
 using TheaCard.Core.Enums;
 
 namespace TheaCard.Core.FightModel
@@ -7,10 +8,12 @@ namespace TheaCard.Core.FightModel
     {
         IHeroesFightModel Player { get; }
         IHeroesFightModel Enemy { get; }
+        IReadOnlyList<IHeroModel> HeroesBoard { get; }
+        
         FightType FightType { get; set; }
-        int Round { get; }
 
         void MoveToBoard(IHeroModel heroModel);
-        void NextRound();
+        void RemoveFromBoard(IHeroModel heroModel);
+        void ClearAllInfo();
     }
 }

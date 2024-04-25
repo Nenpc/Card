@@ -17,12 +17,12 @@ namespace TheaCard.Infrastructure.GameState
             _gameStates = gameStates;
         }
         
-        protected override void OnEndState(GameStates gameStates)
+        protected override void EndState(GameStates gameStates)
         {
             if (_active)
             {
                 _activeState.End();
-                _activeState.OnEndState -= OnEndState;
+                _activeState.OnEndState -= EndState;
                 StartState(GetNextState(_activeState.State));
             }
         }

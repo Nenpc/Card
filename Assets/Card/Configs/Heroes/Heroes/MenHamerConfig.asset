@@ -18,11 +18,11 @@ MonoBehaviour:
   _damageInfos:
   - _fightType: 1
     _damage: 8
-    _defense: 5
+    _defense: 4
     _health: 25
   - _fightType: 2
     _damage: 1
-    _defense: 2
+    _defense: 1
     _health: 15
   - _fightType: 3
     _damage: 1

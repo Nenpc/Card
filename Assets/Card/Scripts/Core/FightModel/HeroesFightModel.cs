@@ -33,6 +33,11 @@ namespace TheaCard.Core.FightModel
         {
             _heroesModel.Remove(hero);
         }
+        
+        public void ClearAllHeroConfig()
+        {
+            _heroesConfig.Clear();
+        }
 
         public void ClearAllHeroModel()
         {

@@ -13,7 +13,7 @@ namespace TheaCard.Core.GameState
         private readonly IGameStateFightView _view;
         private readonly ICardViewFactory<IHeroModel, ICardFightView> _cardViewFactory;
 
-        private Dictionary<GameTeam, Dictionary<IHeroModel, ICardFightView>> _cardViews = 
+        private Dictionary<GameTeam, Dictionary<IHeroModel, ICardFightView>> _teamCardViews = 
             new Dictionary<GameTeam, Dictionary<IHeroModel, ICardFightView>>();
 
         public GameStateFightViewController(IGameStateFightView view, 
@@ -25,7 +25,7 @@ namespace TheaCard.Core.GameState
         
         public void Init(IReadOnlyList<IHeroModel> playerHeroes, IReadOnlyList<IHeroModel> enemyHeroes)
         {
-            _cardViews.Add(GameTeam.Enemy, new Dictionary<IHeroModel, ICardFightView>());
+            _teamCardViews.Add(GameTeam.Enemy, new Dictionary<IHeroModel, ICardFightView>());
             foreach (var enemyModel in enemyHeroes)
             {
                 var parent = enemyModel.Hand == Hands.Fight
@@ -33,10 +33,10 @@ namespace TheaCard.Core.GameState
                     : _view.EnemySupportHand;
                 var enemyView = _cardViewFactory.Get(enemyModel, parent.transform);
                 enemyView.RotateCard(false);
-                _cardViews[GameTeam.Enemy].Add(enemyModel, enemyView);
+                _teamCardViews[GameTeam.Enemy].Add(enemyModel, enemyView);
             }
             
-            _cardViews.Add(GameTeam.Player, new Dictionary<IHeroModel, ICardFightView>());
+            _teamCardViews.Add(GameTeam.Player, new Dictionary<IHeroModel, ICardFightView>());
             foreach (var playerModel in playerHeroes)
             {
                 var parent = playerModel.Hand == Hands.Fight
@@ -44,15 +44,15 @@ namespace TheaCard.Core.GameState
                     : _view.PlayerSupportHand;
                 var playerView = _cardViewFactory.Get(playerModel, parent.transform);
                 playerView.OnCardClick += SelectCard;
-                _cardViews[GameTeam.Player].Add(playerModel, playerView);
+                _teamCardViews[GameTeam.Player].Add(playerModel, playerView);
             }
         }
         
         public void Dispose()
         {
-            if (_cardViews.ContainsKey(GameTeam.Player))
+            if (_teamCardViews.ContainsKey(GameTeam.Player))
             {
-                foreach (var card in _cardViews[GameTeam.Player])
+                foreach (var card in _teamCardViews[GameTeam.Player])
                 {
                     card.Value.OnCardClick -= SelectCard;
                 }
@@ -66,20 +66,37 @@ namespace TheaCard.Core.GameState
 
         public void MoveToMainField(IHeroModel hero)
         {
-            _cardViews[hero.Team][hero].View.transform.SetParent(_view.MainField.transform);
+            _teamCardViews[hero.Team][hero].View.transform.SetParent(_view.MainField.transform);
         }
 
         public void AttackHero(IHeroModel hero, IHeroModel goal)
         {
-            _cardViews[hero.Team][hero].UpdateView();;
+            _teamCardViews[goal.Team][goal].UpdateView();;
         }
 
         public void DestroyHero(IHeroModel hero)
         {
-            var cardView = _cardViews[hero.Team][hero].View.GetComponent<ICardFightView>();
-            _cardViews[hero.Team].Remove(hero);
+            var cardView = _teamCardViews[hero.Team][hero].View.GetComponent<ICardFightView>();
+            _teamCardViews[hero.Team].Remove(hero);
             
             _cardViewFactory.Return(cardView);
+        }
+
+        public void ClearAllCards()
+        {
+            foreach (var teamCardViews in _teamCardViews)
+            {
+                foreach (var card in teamCardViews.Value)
+                {
+                    var cardView = card.Value.View.GetComponent<ICardFightView>();
+                    _cardViewFactory.Return(cardView);
+                }
+            }
+            
+            foreach (var teamCardViews in _teamCardViews)
+            {
+                _teamCardViews[teamCardViews.Key].Clear();
+            }
         }
 
         public void Show()

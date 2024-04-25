@@ -11,7 +11,12 @@ namespace TheaCard.Core.Process
 {
     public sealed class EnemySelectProcess : IIntermediaryState<ProcessStates>
     {
+#if UNITY_EDITOR
+        private const int EndDelayMillisecond = 0;
+#else
         private const int EndDelayMillisecond = 2000;
+#endif
+
         
         public event Action<ProcessStates> OnEndState;
         public ProcessStates State => ProcessStates.AI;
@@ -42,7 +47,6 @@ namespace TheaCard.Core.Process
                 _viewController.MoveToMainField(heroModel);
             }
             
-            _fightModel.NextRound();
             OnEndState?.Invoke(State);
         }
 

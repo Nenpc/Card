@@ -21,18 +21,11 @@ namespace TheaCard.Core.Process
             _fightModel = fightModel;
         }
         
-        protected override void OnEndState(ProcessStates states)
-        {
-            if (_active)
-            {
-                _activeState.OnEndState -= OnEndState;
-                _activeState.End();
-                StartState(GetNextState(_activeState.State));
-            }
-        }
-        
         protected override ProcessStates GetNextState(ProcessStates states)
         {
+            if (states == ProcessStates.Fight)
+                return ProcessStates.None;
+            
             var freePlayerHero = _fightModel.Player.HeroesModel.FirstOrDefault(x => !x.OnBoard);
             var freeEnemyHero = _fightModel.Enemy.HeroesModel.FirstOrDefault(x => !x.OnBoard);
             var fightState = freePlayerHero == default && freeEnemyHero == default;

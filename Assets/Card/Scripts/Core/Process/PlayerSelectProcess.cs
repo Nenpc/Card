@@ -44,7 +44,6 @@ namespace TheaCard.Core.Process
             _fightModel.MoveToBoard(heroModel);
             _viewController.MoveToMainField(heroModel);
 
-            _fightModel.NextRound();
             OnEndState?.Invoke(State);
         }
         
