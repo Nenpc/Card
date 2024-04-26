@@ -1,4 +1,5 @@
 ﻿using System;
+using TheaCard.Core.Buff;
 using TheaCard.Core.Card;
 using TheaCard.Core.FightModel;
 using TheaCard.Core.Heroes;
@@ -21,6 +22,7 @@ namespace TheaCard.Core.GameState
         private readonly IGameStateSelectHandGUI _gui;
         private readonly ICardViewFactory<IHeroModel, ICardFightView> _cardFightViewFactory;
         private readonly IFightModel _fightModel;
+        private readonly IBuffContainer _buffContainer;
 
         private bool _isInitialize = false;
         private int _shuffleCards = 0;
@@ -28,7 +30,8 @@ namespace TheaCard.Core.GameState
         public GameStateSelectHand(IGameStateSelectHandView view, 
             IGameStateSelectHandGUI gui,
             ICardViewFactory<IHeroModel, ICardFightView> cardFightViewFactory,
-            IFightModel fightModel)
+            IFightModel fightModel,
+            IBuffContainer buffContainer)
         {
             _view = view;
             
@@ -38,6 +41,7 @@ namespace TheaCard.Core.GameState
 
             _cardFightViewFactory = cardFightViewFactory;
             _fightModel = fightModel;
+            _buffContainer = buffContainer;
         }
         
         public void Dispose()
@@ -66,7 +70,7 @@ namespace TheaCard.Core.GameState
             foreach (var heroConfig in _fightModel.Player.HeroesConfig)
             {
                 var hand = Random.Range(0f, 1f) > 0.5f ? Hands.Fight : Hands.Support;
-                _fightModel.Player.AddHeroModel(new HeroModel(heroConfig, _fightModel.FightType, GameTeam.Player, hand));
+                _fightModel.Player.AddHeroModel(new HeroModel(heroConfig, _buffContainer.GetBuff(heroConfig.Buff), _fightModel.FightType, GameTeam.Player, hand));
             }
         }
 

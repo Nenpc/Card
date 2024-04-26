@@ -1,4 +1,5 @@
-﻿using TheaCard.Core.Currency;
+﻿using TheaCard.Core.Buff;
+using TheaCard.Core.Currency;
 using TheaCard.Core.Enums;
 using TheaCard.Core.GameState;
 using TheaCard.Core.Progress;
@@ -20,7 +21,7 @@ namespace TheaCard.Core.Initialize
             BindCurrency();
             BindProgress();
             BindProcess();
-            BindCard();
+            BindBuff();
             
             Container.Bind<IInitializable>().To<GameInitializer>().AsSingle().NonLazy();
             Container.Bind<IInitializable>().To<CurrencyInitializer>().AsSingle().NonLazy();
@@ -70,9 +71,14 @@ namespace TheaCard.Core.Initialize
             Container.Bind<IIntermediary<ProcessStates>>().To<ProcessIntermediary>().AsSingle().NonLazy();
         }
 
-        private void BindCard()
+        private void BindBuff()
         {
-
+            Container.Bind<IBuff>().To<IncreasePhysicalDamageLeft>().AsSingle().NonLazy();
+            Container.Bind<IBuff>().To<NoneBuff>().AsSingle().NonLazy();
+            Container.Bind<IBuff>().To<IncreaseVerbalDamageAll>().AsSingle().NonLazy();
+            Container.Bind<IBuff>().To<StartPhysicalDamage>().AsSingle().NonLazy();
+            
+            Container.Bind<IBuffContainer>().To<BuffContainer>().AsSingle().NonLazy();
         }
     }
 }

@@ -2,7 +2,6 @@
     "name": "TheaCard.Core.Heroes",
     "rootNamespace": "",
     "references": [
-        "GUID:68ba891be9ddb0b448dc20471bb5743d",
         "GUID:f6a93ebec9faf6247b68953d7cbe64c9"
     ],
     "includePlatforms": [],

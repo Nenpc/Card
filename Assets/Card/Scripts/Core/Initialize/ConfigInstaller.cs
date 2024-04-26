@@ -1,4 +1,5 @@
-﻿using TheaCard.Core.Card;
+﻿using TheaCard.Core.Buff;
+using TheaCard.Core.Card;
 using UnityEngine;
 using Zenject;
 using TheaCard.Core.Currency;
@@ -11,12 +12,14 @@ namespace TheaCard.Core.Initialize
     {
         [SerializeField] private CurrencyConfig _currencyConfig;
         [SerializeField] private HeroesConfig _heroeseConfig;
+        [SerializeField] private BuffsConfig _buffsConfig;
         [SerializeField] private CardViewConfig _cardViewConfig;
 
         private void InstallCurrency()
         {
             Container.Bind<CurrencyConfig>().FromInstance(_currencyConfig);
             Container.Bind<IHeroesConfig>().FromInstance(_heroeseConfig);
+            Container.Bind<IBuffsConfig>().FromInstance(_buffsConfig);
 
             Container.Bind<ICardViewConfig>().FromInstance(_cardViewConfig);
         }

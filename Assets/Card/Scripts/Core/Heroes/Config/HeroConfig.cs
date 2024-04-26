@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TheaCard.Core.Heroes
 {
-    [CreateAssetMenu(menuName = "Card/Hero/HeroConfig")]
+    [CreateAssetMenu(menuName = "TheaCard/Hero/HeroConfig")]
     public sealed class HeroConfig : ScriptableObject, IHeroConfig
     {
         [SerializeField] private string _name;

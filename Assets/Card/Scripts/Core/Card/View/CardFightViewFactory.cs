@@ -13,6 +13,7 @@ namespace TheaCard.Core.Card
         {
             var view = Get(parent);
             view.Init(heroModel);
+            view.SetHeroActive(true);
             view.View.SetActive(true);
             return view;
         }

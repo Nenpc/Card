@@ -2,7 +2,7 @@
 
 namespace TheaCard.Core.Card
 {
-    [CreateAssetMenu(menuName = "Card/Config/CardViewConfig")]
+    [CreateAssetMenu(menuName = "TheaCard/Config/CardViewConfig")]
     public sealed class CardViewConfig : ScriptableObject, ICardViewConfig
     {
         [SerializeField] private CardFightView _cardFightView;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TheaCard.Core.Currency
 {
-    [CreateAssetMenu(menuName = "Card/CurrencyConfig")]
+    [CreateAssetMenu(menuName = "TheaCard/CurrencyConfig")]
     public sealed class CurrencyConfig : ScriptableObject
     {
         [SerializeField] private List<CurrencyInfo> _startCurrencies;

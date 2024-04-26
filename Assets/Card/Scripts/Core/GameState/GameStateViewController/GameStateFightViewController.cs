@@ -67,6 +67,12 @@ namespace TheaCard.Core.GameState
         public void MoveToMainField(IHeroModel hero)
         {
             _teamCardViews[hero.Team][hero].View.transform.SetParent(_view.MainField.transform);
+            _teamCardViews[hero.Team][hero].SetHeroActive(hero.Active);
+        }
+
+        public void ActiveHero(IHeroModel hero)
+        {
+            _teamCardViews[hero.Team][hero].SetHeroActive(hero.Active);
         }
 
         public void AttackHero(IHeroModel hero, IHeroModel goal)
@@ -98,6 +104,11 @@ namespace TheaCard.Core.GameState
                 _teamCardViews[teamCardViews.Key].Clear();
             }
             _teamCardViews.Clear();
+        }
+
+        public void UpdateHeroView(IHeroModel hero)
+        {
+            _teamCardViews[hero.Team][hero].UpdateView();
         }
 
         public void Show()

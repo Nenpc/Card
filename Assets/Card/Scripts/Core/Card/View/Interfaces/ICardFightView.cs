@@ -8,6 +8,7 @@ namespace TheaCard.Core.Card
         event Action<IHeroModel> OnCardClick;
         void Init(IHeroModel heroModel, bool mainSide = true);
         void RotateCard(bool mainSide);
-        public void UpdateView();
+        void UpdateView();
+        void SetHeroActive(bool active);
     }
 }

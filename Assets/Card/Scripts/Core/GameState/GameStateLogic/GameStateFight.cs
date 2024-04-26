@@ -1,4 +1,5 @@
 ﻿using System;
+using TheaCard.Core.Buff;
 using TheaCard.Core.FightModel;
 using TheaCard.Core.Heroes;
 using TheaCard.Core.Progress;
@@ -19,12 +20,14 @@ namespace TheaCard.Core.GameState
         private readonly IProgressPresenter _progressPresenter;
         private readonly IFightModel _fightModel;
         private readonly IIntermediary<ProcessStates> _processIntermediary;
+        private readonly IBuffContainer _buffContainer;
         
         public GameStateFight(IGameStateFightViewController viewController, 
             IGameStateFightGUI gui,
             IProgressPresenter progressPresenter,
             IFightModel fightModel,
-            IIntermediary<ProcessStates> processIntermediary)
+            IIntermediary<ProcessStates> processIntermediary,
+            IBuffContainer buffContainer)
         {
             _viewController = viewController;
             _processIntermediary = processIntermediary;
@@ -35,6 +38,7 @@ namespace TheaCard.Core.GameState
 
             _progressPresenter = progressPresenter;
             _fightModel = fightModel;
+            _buffContainer = buffContainer;
         }
         
         private void InitView()
@@ -47,7 +51,7 @@ namespace TheaCard.Core.GameState
             foreach (var heroConfig in _fightModel.Enemy.HeroesConfig)
             {
                 var hand = Random.Range(0f, 1f) > 0.5f ? Hands.Fight : Hands.Support;
-                var heroModel = new HeroModel(heroConfig, _fightModel.FightType, GameTeam.Enemy, hand);
+                var heroModel = new HeroModel(heroConfig, _buffContainer.GetBuff(heroConfig.Buff), _fightModel.FightType, GameTeam.Enemy, hand);
                 _fightModel.Enemy.AddHeroModel(heroModel);
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using TheaCard.Core.Buff;
 using TheaCard.Core.FightModel;
 using TheaCard.Core.GameState;
 using TheaCard.Core.Heroes;
@@ -43,10 +44,42 @@ namespace TheaCard.Core.Process
             
             _fightModel.MoveToBoard(heroModel);
             _viewController.MoveToMainField(heroModel);
+            ApplyBuff(heroModel);
 
             OnEndState?.Invoke(State);
         }
-        
+
+        private void ApplyBuff(IHeroModel heroModel)
+        {
+            if (heroModel.Buff.Buff != BuffType.None)
+            {
+                IHeroModel leftHero = null;
+                IHeroModel rightHero = null;
+                
+                if (_fightModel.HeroesBoard.Count > 1)
+                {
+                    for (int i = 0; i < _fightModel.HeroesBoard.Count; i++)
+                    {
+                        if (_fightModel.HeroesBoard[i] == heroModel)
+                        {
+                            if (i > 0)
+                                leftHero = _fightModel.HeroesBoard[i - 1];
+                            
+                            if (i < _fightModel.HeroesBoard.Count - 2)
+                                rightHero = _fightModel.HeroesBoard[i + 1];
+                        }
+                    }
+                }
+
+                heroModel.Buff.Use(_fightModel.FightType, heroModel, leftHero, rightHero);
+                
+                if (leftHero != null)
+                    _viewController.UpdateHeroView(leftHero);
+                if (rightHero != null)
+                    _viewController.UpdateHeroView(rightHero);
+            }
+        }
+
         public void Start()
         {
             _active = true;

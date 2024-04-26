@@ -22,6 +22,7 @@ namespace TheaCard.Core.Heroes
         private int _baseDefense;
         private int _place;
         private IBuff _buff;
+        private bool _active;
         
         public IHeroConfig Def => _def;
         public string Name => Def.Name;
@@ -37,13 +38,16 @@ namespace TheaCard.Core.Heroes
         public Hands Hand => _hand;
         public int Place => _place;
         public bool OnBoard => _place > -1;
-        
-        public HeroModel(IHeroConfig def, FightType fightType, GameTeam team, Hands hand)
+        public bool Active => _active;
+
+        public HeroModel(IHeroConfig def, IBuff buff, FightType fightType, GameTeam team, Hands hand)
         {
             _place = -1;
             _def = def;
             _team = team;
             _hand = hand;
+            _buff = buff;
+            _active = _hand == Hands.Fight;
 
             var damageInfo = _def.DamageInfos.FirstOrDefault(x => x.FightType == fightType);
             
@@ -92,6 +96,9 @@ namespace TheaCard.Core.Heroes
             _defense = Mathf.Clamp(_defense + amount, 0, int.MaxValue);
         }
 
-        public override string ToString() => $"Figure, def:{Def}, team:{Team}";
+        public void ActiveHero()
+        {
+            _active = true;
+        }
     }
 }

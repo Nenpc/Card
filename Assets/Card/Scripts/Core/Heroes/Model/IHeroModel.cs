@@ -20,11 +20,13 @@ namespace TheaCard.Core.Heroes
         public Hands Hand { get; }
         public int Place { get; }
         public bool OnBoard { get; }
+        public bool Active { get; }
 
         public void SetPlace(int place);
         public void TakeDamage(int damage);
         public void TakeHeal(int heal);
         public void UpdateDamage(int amount);
         public void UpdateDefense(int amount);
+        public void ActiveHero();
     }
 }

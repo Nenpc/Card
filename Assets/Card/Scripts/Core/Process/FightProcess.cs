@@ -65,7 +65,14 @@ namespace TheaCard.Core.Process
             var leftEnemyPosition = -1;
             var rightEnemyPosition = -1;
             var heroModel = _fightModel.HeroesBoard[heroPosition];
-            
+
+            if (!heroModel.Active)
+            {
+                heroModel.ActiveHero();
+                _viewController.ActiveHero(heroModel);
+                return false;
+            }
+
             for (int i = heroPosition; i >= 0; i--)
             {
                 if (_fightModel.HeroesBoard[i].Team != heroModel.Team)

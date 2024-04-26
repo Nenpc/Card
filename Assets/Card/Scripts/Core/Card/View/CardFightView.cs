@@ -18,6 +18,7 @@ namespace TheaCard.Core.Card
         [SerializeField] private TextMeshProUGUI _damage;
         [SerializeField] private TextMeshProUGUI _defense;
         [SerializeField] private TextMeshProUGUI _health;
+        [SerializeField] private GameObject _sleep;
         
         private IHeroModel _heroModel;
 
@@ -61,7 +62,12 @@ namespace TheaCard.Core.Card
             _health.text = healthText;
             _health.color = GetColor(_heroModel.Health, _heroModel.BaseHealth);
         }
-        
+
+        public void SetHeroActive(bool active)
+        {
+            _sleep.SetActive(!active);
+        }
+
         private Color GetColor(int currentValue, int baseValue)
         {
             if (currentValue > baseValue)
