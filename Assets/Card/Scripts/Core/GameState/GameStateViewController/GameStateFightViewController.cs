@@ -97,6 +97,7 @@ namespace TheaCard.Core.GameState
             {
                 _teamCardViews[teamCardViews.Key].Clear();
             }
+            _teamCardViews.Clear();
         }
 
         public void Show()

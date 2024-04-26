@@ -72,12 +72,9 @@ namespace TheaCard.Core.GameState
 
         public void Start()
         {
-            if (!_isInitialize)
-            {
-                UpdateCardHand();
-                _view.Init(_cardFightViewFactory, _fightModel.Player.HeroesModel);
-                _isInitialize = true;
-            }
+            UpdateCardHand();
+            _view.Init(_cardFightViewFactory, _fightModel.Player.HeroesModel);
+            _isInitialize = true;
             
             _gui.Show();
             _view.Show();
@@ -90,7 +87,5 @@ namespace TheaCard.Core.GameState
             _gui.Hide();
             _view.Hide();
         }
-
-
     }
 }

@@ -7,6 +7,8 @@ namespace TheaCard.Core.Currency
         private readonly ICurrencyModel _currencyModel;
         private readonly ICurrencyGUIController _currencyGUIController;
         
+        private IReadOnlyList<CurrencyInfo> _startCurrencies = new List<CurrencyInfo>();
+        
         public CurrencyPresenter(ICurrencyModel currencyModel, 
             ICurrencyGUIController currencyGUIController)
         {
@@ -16,9 +18,15 @@ namespace TheaCard.Core.Currency
 
         public void Init(IReadOnlyList<CurrencyInfo> startCurrencies)
         {
-            foreach (var startCurrency in startCurrencies)
+            _startCurrencies = startCurrencies;
+            SetDefaultCurrencies();
+        }
+
+        public void SetDefaultCurrencies()
+        {
+            foreach (var startCurrency in _startCurrencies)
             {
-                _currencyModel.AddNewCurrency(startCurrency.Currency ,startCurrency.Amount);
+                _currencyModel.SetCurrencyValue(startCurrency.Currency ,startCurrency.Amount);
             }
 
             foreach (var currencyInfo in _currencyModel.CurrencyInfos)

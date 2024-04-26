@@ -19,8 +19,6 @@ namespace TheaCard.Core.GameState
         private readonly IProgressPresenter _progressPresenter;
         private readonly IFightModel _fightModel;
         private readonly IIntermediary<ProcessStates> _processIntermediary;
-
-        private bool _isInitialize = false;
         
         public GameStateFight(IGameStateFightViewController viewController, 
             IGameStateFightGUI gui,
@@ -33,7 +31,6 @@ namespace TheaCard.Core.GameState
             _processIntermediary.OnEndState += ClearInfo;
 
             _gui = gui;
-            _gui.EndMove.onClick.AddListener(ChangePlayer);
             _gui.GiveUp.onClick.AddListener(GiveUp);
 
             _progressPresenter = progressPresenter;
@@ -73,14 +70,11 @@ namespace TheaCard.Core.GameState
         
         public void Start()
         {
-            if (!_isInitialize)
-            {
-                CreateEnemyFightModel();
-                InitView();
-                _processIntermediary.StartIntermediaryStates();
-                _isInitialize = true;
-            }
+            CreateEnemyFightModel();
+            InitView();
+            _processIntermediary.StartIntermediaryStates();
 
+            
             _gui.Show();
             _viewController.Show();
             _progressPresenter.ShowPanel();
@@ -95,12 +89,9 @@ namespace TheaCard.Core.GameState
 
         private void GiveUp()
         {
+            _fightModel.ClearAllInfo();
+            _viewController.ClearAllCards();
             OnEndState?.Invoke(State);
-        }
-
-        private void ChangePlayer()
-        {
-            
         }
     }
 }

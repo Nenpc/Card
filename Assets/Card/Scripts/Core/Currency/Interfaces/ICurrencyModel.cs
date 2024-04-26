@@ -8,5 +8,6 @@ namespace TheaCard.Core.Currency
         void AddNewCurrency(Currencies currencyType, int amount);
         void GiveCurrency(Currencies currencyType, int amount);
         bool TryTakeCurrency(Currencies currencyType, int amount);
+        void SetCurrencyValue(Currencies currencyType, int amount);
     }
 }

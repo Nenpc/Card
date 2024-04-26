@@ -44,13 +44,16 @@ namespace TheaCard.Core.GameState
             foreach (var cardView in _cardSelectViews)
             {
                 cardView.Value.Deselect();
+                cardView.Value.OnCardClick -= CardClick;
                 _cardViewFactory.Return(cardView.Value);
             }
+            _cardSelectViews.Clear();
         }
 
         public void Init(ICardViewFactory<IHeroConfig, ICardSelectView> cardViewFactory, IReadOnlyList<IHeroConfig> heroesConfigs)
         {
             _cardViewFactory = cardViewFactory;
+
             foreach (var heroConfig in heroesConfigs)
             {
                 var cardSelectView = cardViewFactory.Get(heroConfig, _field);

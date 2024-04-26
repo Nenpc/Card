@@ -45,6 +45,7 @@ namespace TheaCard.Core.GameState
         public void Show()
         {
             gameObject.SetActive(true);
+            _physicalToggle.isOn = true;
             OnFightTypeChanged?.Invoke(FightType.Physical);
         }
 

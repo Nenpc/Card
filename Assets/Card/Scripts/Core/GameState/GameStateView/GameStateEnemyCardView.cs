@@ -43,14 +43,12 @@ namespace TheaCard.Core.GameState
             gameObject.SetActive(false);
             
             foreach (var enemyView in _enemyViews)
-            {
                 _cardViewFactory.Return(enemyView);
-            }
+            _enemyViews.Clear();
             
             foreach (var playerView in _playerViews)
-            {
                 _cardViewFactory.Return(playerView);
-            }
+            _playerViews.Clear();
         }
     }
 }

@@ -50,12 +50,8 @@ namespace TheaCard.Core.GameState
 
         public void Start()
         {
-            if (!_isInitialize)
-            {
-                CreateEnemies();
-                _enemyCardView.Init(_cardViewFactory, _fightModel.Enemy.HeroesConfig, _fightModel.Player.HeroesConfig);
-                _isInitialize = true;
-            }
+            CreateEnemies();
+            _enemyCardView.Init(_cardViewFactory, _fightModel.Enemy.HeroesConfig, _fightModel.Player.HeroesConfig);
 
             _gui.Show();
             _enemyCardView.Show();
@@ -81,6 +77,7 @@ namespace TheaCard.Core.GameState
         public void Dispose()
         {
             _gui.OnNextStage -= NextStage;
+            _gui.OnFightTypeChanged -= SelectFightType;
         }
     }
 }

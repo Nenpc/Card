@@ -34,6 +34,14 @@ namespace TheaCard.Core.Currency
             AddCurrency(currencyType, -amount);
             return true;
         }
+        
+        public void SetCurrencyValue(Currencies currencyType, int amount)
+        {
+            if (!_currencyInfos.ContainsKey(currencyType))
+                _currencyInfos.Add(currencyType, amount);
+            else
+                _currencyInfos[currencyType] = amount;
+        }
 
         private void AddCurrency(Currencies currencyType, int amount)
         {

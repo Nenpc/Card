@@ -40,7 +40,6 @@ namespace TheaCard.Core.Process
 
             for (int i = 0; i < _fightModel.HeroesBoard.Count; i++)
             {
-                Debug.Log($"Active hero {i}");
                 if (HeroAction(i))
                     i--;
                 
@@ -53,14 +52,12 @@ namespace TheaCard.Core.Process
                 var hasEnemyModel = _fightModel.HeroesBoard.Any(x => x.Team != firstModel.Team);
                 if (hasEnemyModel)
                 {
-                    Debug.Log("Start new cicle");
                     StartAttackCycle().Forget();
                     return;
                 }
             }
             
             OnEndState?.Invoke(State);
-            Debug.Log("End fight state");
         }
 
         private bool HeroAction(int heroPosition)
@@ -89,7 +86,6 @@ namespace TheaCard.Core.Process
 
             if (leftEnemyPosition == -1 && rightEnemyPosition == -1)
             {
-                Debug.Log($"No enemy!");
                 return false;
             }
 
@@ -102,15 +98,6 @@ namespace TheaCard.Core.Process
             else
             {
                 direction = leftEnemyPosition != -1 ? -1 : 1;
-            }
-
-            if (direction == -1)
-            {
-                Debug.Log($"Attack hero {leftEnemyPosition}");
-            }
-            else
-            {
-                Debug.Log($"Attack hero {rightEnemyPosition}");
             }
 
             enemyModel = direction == -1 ? 

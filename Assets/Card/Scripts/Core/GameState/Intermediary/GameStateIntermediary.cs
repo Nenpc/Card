@@ -16,16 +16,6 @@ namespace TheaCard.Infrastructure.GameState
         {
             _gameStates = gameStates;
         }
-        
-        protected override void EndState(GameStates gameStates)
-        {
-            if (_active)
-            {
-                _activeState.End();
-                _activeState.OnEndState -= EndState;
-                StartState(GetNextState(_activeState.State));
-            }
-        }
 
         protected override GameStates GetNextState(GameStates gameStates)
         {

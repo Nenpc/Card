@@ -28,6 +28,7 @@ namespace TheaCard.Core.GameState
             {
                 _cardFactory.Return(heroView.Value);
             }
+            _cardHandSelectViews.Clear();
         }
 
         public void Init(ICardViewFactory<IHeroModel, ICardFightView> cardFactory, IReadOnlyList<IHeroModel> heroesModels)

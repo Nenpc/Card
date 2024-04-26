@@ -84,7 +84,7 @@ namespace TheaCard.Core.Card
             }
             
             {
-                var fightInfo = _heroConfig.DamageInfos.FirstOrDefault(x => x.FightType == FightType.Physical);
+                var fightInfo = _heroConfig.DamageInfos.FirstOrDefault(x => x.FightType == FightType.Verbal);
                 _verbalDamage.text = fightInfo.Damage.ToString();
                 _verbalDefinition.text = fightInfo.Defense.ToString();
                 _verbalHealth.text = fightInfo.Health.ToString();

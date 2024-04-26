@@ -19,33 +19,32 @@ namespace TheaCard.Core.GameState
         private readonly IGameStateSelectCardView _view;
         private readonly IGameStateSelectCardGUI _gui;
         private readonly IHeroesConfig _heroesConfig;
-        private readonly IFightModel _FightModel;
+        private readonly IFightModel _fightModel;
         private readonly ICurrencyPresenter _currencyPresenter;
         private readonly ICardViewFactory<IHeroConfig, ICardSelectView> _cardViewFactory;
-
-        private bool _isInitialize = false;
         
         public GameStateSelectCard(IGameStateSelectCardView view, 
             IGameStateSelectCardGUI gui, 
             IHeroesConfig heroesConfig,
-            IFightModel FightModel,
+            IFightModel fightModel,
             ICurrencyPresenter currencyPresenter,
             ICardViewFactory<IHeroConfig, ICardSelectView> cardViewFactory)
         {
             _view = view;
+            _view.OnCardClick += OnCardClick;
             
             _gui = gui;
             _gui.OnNextStage += NextStage;
 
             _heroesConfig = heroesConfig;
-            _FightModel = FightModel;
+            _fightModel = fightModel;
             _currencyPresenter = currencyPresenter;
             _cardViewFactory = cardViewFactory;
         }
         
         private void NextStage()
         {
-            if (_FightModel.Player.HeroesConfig.Count == 0)
+            if (_fightModel.Player.HeroesConfig.Count == 0)
             {
                 Debug.LogWarning("You must select at least one hero to fight!");
                 return;
@@ -56,31 +55,27 @@ namespace TheaCard.Core.GameState
 
         private void OnCardClick(IHeroConfig heroConfig)
         {
-            if (!_FightModel.Player.HeroesConfig.Contains(heroConfig))
+            if (!_fightModel.Player.HeroesConfig.Contains(heroConfig))
             {
                 if (_currencyPresenter.TryTakeCurrency(Currencies.Silver, heroConfig.Price))
                 {
-                    _FightModel.Player.AddHeroConfig(heroConfig);
+                    _fightModel.Player.AddHeroConfig(heroConfig);
                     _view.SelectCard(heroConfig);
                 }
             }
             else
             {
                 _currencyPresenter.GiveCurrency(Currencies.Silver, heroConfig.Price);
-                _FightModel.Player.RemoveHeroConfig(heroConfig);
+                _fightModel.Player.RemoveHeroConfig(heroConfig);
                 _view.DeselectCard(heroConfig);
             }
         }
 
         public void Start()
         {
-            if (!_isInitialize)
-            {
-                _view.Init(_cardViewFactory, _heroesConfig.Heroes);
-                _view.OnCardClick += OnCardClick;
-                _isInitialize = true;
-            }
-
+            _view.Init(_cardViewFactory, _heroesConfig.Heroes);
+            _currencyPresenter.SetDefaultCurrencies();
+            
             _gui.Show();
             _view.Show();
             _currencyPresenter.ShowPanel();
@@ -95,9 +90,7 @@ namespace TheaCard.Core.GameState
 
         public void Dispose()
         {
-            if (_isInitialize)
-                _view.OnCardClick -= OnCardClick;
-
+            _view.OnCardClick -= OnCardClick;
             _gui.OnNextStage -= NextStage;
         }
     }
