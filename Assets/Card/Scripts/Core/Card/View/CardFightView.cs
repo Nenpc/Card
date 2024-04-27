@@ -11,6 +11,8 @@ namespace TheaCard.Core.Card
         public event Action<IHeroModel> OnCardClick;
         
         [SerializeField] private Button _clickButton;
+        [SerializeField] private Transform _infoContainer;
+        [SerializeField] private Canvas _canvas;
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private Image _backImage;
         [SerializeField] private Image _icon;
@@ -23,7 +25,9 @@ namespace TheaCard.Core.Card
         private IHeroModel _heroModel;
 
         public GameObject View => gameObject;
-        
+        public Transform InfoContainer => _infoContainer;
+        public Canvas Canvas => _canvas;
+
         private void Awake()
         {
             _clickButton.onClick.AddListener(() => OnCardClick?.Invoke(_heroModel));

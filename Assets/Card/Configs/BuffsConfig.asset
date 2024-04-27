@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42880e4646fe4222a38709fda629773c, type: 3}
   m_Name: BuffsConfig
   m_EditorClassIdentifier: 
-  _buffConfigs: []
+  _buffConfigs:
+  - _buffType: 1
+    _value: 3
+  - _buffType: 2
+    _value: 2
+  - _buffType: 3
+    _value: 4

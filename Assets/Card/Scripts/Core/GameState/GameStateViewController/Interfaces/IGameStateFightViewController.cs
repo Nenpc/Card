@@ -11,7 +11,7 @@ namespace TheaCard.Core.GameState
         void Init(IReadOnlyList<IHeroModel> playerHeroes, IReadOnlyList<IHeroModel> enemyHeroes);
         void MoveToMainField(IHeroModel hero);
         void ActiveHero(IHeroModel hero);
-        void AttackHero(IHeroModel hero, IHeroModel goal);
+        void AttackHero(IHeroModel hero, IHeroModel goal, int animationTimeMili = 0);
         void UpdateHeroView(IHeroModel hero);
         void DestroyHero(IHeroModel hero);
         void ClearAllCards();

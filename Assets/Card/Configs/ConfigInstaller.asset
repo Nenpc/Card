@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currencyConfig: {fileID: 11400000, guid: 0024a3ac180ca334591573ab1d339ba1, type: 2}
   _heroeseConfig: {fileID: 11400000, guid: ca52c58ba54b5c34cab1f78617449bac, type: 2}
+  _buffsConfig: {fileID: 11400000, guid: ef475c25e4afef64ebacd4368be1bf9f, type: 2}
   _cardViewConfig: {fileID: 11400000, guid: b7e2c44b5e7475149b5cbd8259c29eb2, type: 2}

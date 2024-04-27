@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using TheaCard.Core.Enums;
@@ -14,7 +15,7 @@ namespace TheaCard.Core.Process
 {
     public sealed class FightProcess : IIntermediaryState<ProcessStates>
     {
-        private const int FightStepPause = 500;
+        private const int FightStepPause = 1000;
         
         public event Action<ProcessStates> OnEndState;
         
@@ -22,6 +23,8 @@ namespace TheaCard.Core.Process
         private readonly IFightModel _fightModel;
 
         public ProcessStates State => ProcessStates.Fight;
+
+        private CancellationTokenSource _cancellationTokenSource;
         
         public FightProcess(IGameStateFightViewController viewController, IFightModel fightModel)
         {
@@ -31,32 +34,43 @@ namespace TheaCard.Core.Process
 
         public void Start()
         {
-            StartAttackCycle().Forget();
+            _cancellationTokenSource = new CancellationTokenSource();
+            StartAttackCycle(_cancellationTokenSource.Token).Forget();
         }
 
-        private async UniTask StartAttackCycle()
+        private async UniTask StartAttackCycle(CancellationToken token)
         {
-            await Task.Delay(FightStepPause);
+            await Task.Delay(FightStepPause, token);
 
             for (int i = 0; i < _fightModel.HeroesBoard.Count; i++)
             {
-                if (HeroAction(i))
-                    i--;
-                
-                await Task.Delay(FightStepPause);
-            }
-
-            var firstModel = _fightModel.HeroesBoard.FirstOrDefault();
-            if (firstModel != default)
-            {
-                var hasEnemyModel = _fightModel.HeroesBoard.Any(x => x.Team != firstModel.Team);
-                if (hasEnemyModel)
+                if (!token.IsCancellationRequested)
                 {
-                    StartAttackCycle().Forget();
-                    return;
+                    if (HeroAction(i))
+                        i--;
+
+                    await Task.Delay(FightStepPause, token);
+                }
+                else
+                {
+                    break;
                 }
             }
-            
+
+            if (!token.IsCancellationRequested)
+            {
+                var firstModel = _fightModel.HeroesBoard.FirstOrDefault();
+                if (firstModel != default)
+                {
+                    var hasEnemyModel = _fightModel.HeroesBoard.Any(x => x.Team != firstModel.Team);
+                    if (hasEnemyModel)
+                    {
+                        StartAttackCycle(token).Forget();
+                        return;
+                    }
+                }
+            }
+
             OnEndState?.Invoke(State);
         }
 
@@ -100,7 +114,7 @@ namespace TheaCard.Core.Process
             IHeroModel enemyModel;
             if (leftEnemyPosition != -1 && rightEnemyPosition != -1)
             {
-                direction = Random.Range(0, 1) > 0.5f ? 1 : -1;
+                direction = Random.Range(0f, 1f) > 0.5f ? 1 : -1;
             }
             else
             {
@@ -120,7 +134,7 @@ namespace TheaCard.Core.Process
             }
             else
             {
-                _viewController.AttackHero(heroModel, enemyModel);
+                _viewController.AttackHero(heroModel, enemyModel, FightStepPause);
             }
 
             return false;
@@ -135,6 +149,8 @@ namespace TheaCard.Core.Process
         public void End()
         {
             Debug.Log("End");
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
         }
     }
 }

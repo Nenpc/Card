@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using TheaCard.Core.Card;
 using TheaCard.Core.Heroes;
 using TheaCard.Core.Enums;
+using UnityEngine;
 
 namespace TheaCard.Core.GameState
 {
     public sealed class GameStateFightViewController : IGameStateFightViewController, IDisposable
     {
+        private static int SortingOrder = 1;
+        
         public event Action<IHeroModel> OnHeroClick;
         
         private readonly IGameStateFightView _view;
@@ -75,9 +80,38 @@ namespace TheaCard.Core.GameState
             _teamCardViews[hero.Team][hero].SetHeroActive(hero.Active);
         }
 
-        public void AttackHero(IHeroModel hero, IHeroModel goal)
+        public void AttackHero(IHeroModel hero, IHeroModel goal, int animationTimeMili = 0)
         {
-            _teamCardViews[goal.Team][goal].UpdateView();;
+            AttackAnimation(hero, goal, animationTimeMili).Forget();
+        }
+
+        private async UniTask AttackAnimation(IHeroModel heroModel, IHeroModel goalModel, int animationTimeMili = 0)
+        {
+            if (animationTimeMili != 0)
+            {
+                var animationDuration = animationTimeMili / 2f;
+                var heroView = _teamCardViews[heroModel.Team][heroModel];
+                heroView.Canvas.overrideSorting = true;
+                heroView.Canvas.sortingOrder = SortingOrder;
+                
+                var heroContainer = heroView.InfoContainer;
+                var basePosition = heroContainer.position;
+                var goalContainer = _teamCardViews[goalModel.Team][goalModel].InfoContainer;
+
+                heroContainer.DOMove(goalContainer.position, animationDuration * 0.001f, true);
+                await UniTask.Delay((int) (animationDuration));
+
+                _teamCardViews[goalModel.Team][goalModel].UpdateView();
+
+                heroContainer.DOMove(basePosition, animationDuration * 0.001f, true);
+                await UniTask.Delay((int) (animationDuration));
+                
+                heroView.Canvas.overrideSorting = false;
+            }
+            else
+            {
+                _teamCardViews[goalModel.Team][goalModel].UpdateView();
+            }
         }
 
         public void DestroyHero(IHeroModel hero)
