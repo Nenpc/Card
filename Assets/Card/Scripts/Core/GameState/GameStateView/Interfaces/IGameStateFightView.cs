@@ -9,7 +9,5 @@ namespace TheaCard.Core.GameState
         HorizontalLayoutGroup EnemyFightHand { get; }
         HorizontalLayoutGroup EnemySupportHand { get; }
         HorizontalLayoutGroup MainField { get; }
-        void Show();
-        void Hide();
     }
 }

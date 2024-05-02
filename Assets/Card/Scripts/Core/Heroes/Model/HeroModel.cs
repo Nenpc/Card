@@ -9,6 +9,7 @@ namespace TheaCard.Core.Heroes
     public sealed class HeroModel : IHeroModel
     {
         public event Action<IHeroModel> OnDeath;
+        public event Action<IHeroModel, int> OnTakeDamage;
         
         private FightType FightType;
         private IHeroConfig _def;
@@ -71,6 +72,8 @@ namespace TheaCard.Core.Heroes
                 return;
 
             damage -= _defense;
+            
+            OnTakeDamage?.Invoke(this, damage);
 
             _health = Mathf.Clamp(_health - damage, 0, _baseHealth);
             

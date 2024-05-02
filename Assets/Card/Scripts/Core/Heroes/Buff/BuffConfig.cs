@@ -1,4 +1,5 @@
 ﻿using System;
+using TheaCard.Core.Enums;
 using UnityEngine;
 
 namespace TheaCard.Core.Buff

@@ -8,7 +8,5 @@ namespace TheaCard.Core.Currency
         void SetDefaultCurrencies();
         bool TryTakeCurrency(Currencies currencyType, int amount);
         void GiveCurrency(Currencies currencyType, int amount);
-        void ShowPanel();
-        void HidePanel();
     }
 }

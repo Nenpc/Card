@@ -24,7 +24,6 @@ namespace TheaCard.Core.GameState
         private readonly IFightModel _fightModel;
         private readonly IBuffContainer _buffContainer;
 
-        private bool _isInitialize = false;
         private int _shuffleCards = 0;
         
         public GameStateSelectHand(IGameStateSelectHandView view, 
@@ -78,7 +77,6 @@ namespace TheaCard.Core.GameState
         {
             UpdateCardHand();
             _view.Init(_cardFightViewFactory, _fightModel.Player.HeroesModel);
-            _isInitialize = true;
             
             _gui.Show();
             _view.Show();
@@ -86,8 +84,6 @@ namespace TheaCard.Core.GameState
 
         public void End()
         {
-            _isInitialize = false;
-            
             _gui.Hide();
             _view.Hide();
         }

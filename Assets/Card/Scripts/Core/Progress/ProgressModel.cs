@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using TheaCard.Core.Enums;
+using UnityEngine;
 
 namespace TheaCard.Core.Progress
 {
@@ -20,7 +22,10 @@ namespace TheaCard.Core.Progress
 
         public void AddProgress(ProgressTypes progressType, int amount = 1)
         {
-            _progress.Add(progressType, amount);
+            if (_progress.ContainsKey(progressType))
+                _progress[progressType] += amount;
+            else
+                Debug.LogWarning($"Can't find progress info for {progressType}");
         }
     }
 }

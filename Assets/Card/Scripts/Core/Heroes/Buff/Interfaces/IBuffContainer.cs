@@ -1,4 +1,6 @@
-﻿namespace TheaCard.Core.Buff
+﻿using TheaCard.Core.Enums;
+
+namespace TheaCard.Core.Buff
 {
     public interface IBuffContainer
     {

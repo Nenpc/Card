@@ -1,8 +1,8 @@
 ﻿using System;
+using TheaCard.Code.ScreenDealer;
 using TheaCard.Core.Buff;
 using TheaCard.Core.FightModel;
 using TheaCard.Core.Heroes;
-using TheaCard.Core.Progress;
 using TheaCard.Core.Enums;
 using TheaCard.Infrastructure.Intermediary;
 using Random = UnityEngine.Random;
@@ -17,26 +17,26 @@ namespace TheaCard.Core.GameState
 
         private readonly IGameStateFightViewController _viewController;
         private readonly IGameStateFightGUI _gui;
-        private readonly IProgressPresenter _progressPresenter;
+        private readonly IAdditionalScreenDealer _screenDealer;
         private readonly IFightModel _fightModel;
         private readonly IIntermediary<ProcessStates> _processIntermediary;
         private readonly IBuffContainer _buffContainer;
         
         public GameStateFight(IGameStateFightViewController viewController, 
             IGameStateFightGUI gui,
-            IProgressPresenter progressPresenter,
+            IAdditionalScreenDealer screenDealer,
             IFightModel fightModel,
             IIntermediary<ProcessStates> processIntermediary,
             IBuffContainer buffContainer)
         {
             _viewController = viewController;
             _processIntermediary = processIntermediary;
-            _processIntermediary.OnEndState += ClearInfo;
+            _processIntermediary.OnEndState += CheckEndState;
 
             _gui = gui;
             _gui.GiveUp.onClick.AddListener(GiveUp);
 
-            _progressPresenter = progressPresenter;
+            _screenDealer = screenDealer;
             _fightModel = fightModel;
             _buffContainer = buffContainer;
         }
@@ -56,11 +56,11 @@ namespace TheaCard.Core.GameState
             }
         }
 
-        private void ClearInfo(ProcessStates states)
+        private void CheckEndState(ProcessStates states)
         {
             if (states == ProcessStates.Fight)
             {
-                _fightModel.ClearAllInfo();
+                _fightModel.EndFight();
                 _viewController.ClearAllCards();
                 OnEndState?.Invoke(State);
             }
@@ -68,6 +68,7 @@ namespace TheaCard.Core.GameState
 
         public void Dispose()
         {
+            _processIntermediary.OnEndState -= CheckEndState;
             _gui?.EndMove.onClick.RemoveAllListeners();
             _gui?.GiveUp.onClick.RemoveAllListeners();
         }
@@ -77,23 +78,22 @@ namespace TheaCard.Core.GameState
             CreateEnemyFightModel();
             InitView();
             _processIntermediary.StartIntermediaryStates();
-
             
             _gui.Show();
             _viewController.Show();
-            _progressPresenter.ShowPanel();
+            _screenDealer.ShowScreen(AdditionalScreens.Progress);
         }
 
         public void End()
         {
             _gui.Hide();
             _viewController.Hide();
-            _progressPresenter.HidePanel();
+            _screenDealer.HideScreen(AdditionalScreens.Progress);
         }
 
         private void GiveUp()
         {
-            _fightModel.ClearAllInfo();
+            _fightModel.EndFight();
             _viewController.ClearAllCards();
             OnEndState?.Invoke(State);
         }

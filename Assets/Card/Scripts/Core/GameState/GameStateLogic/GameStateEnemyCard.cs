@@ -18,8 +18,6 @@ namespace TheaCard.Core.GameState
         private readonly IHeroesConfig _heroesConfig;
         private readonly ICardViewFactory<IHeroConfig, ICardSelectView> _cardViewFactory;
         private readonly IFightModel _fightModel;
-
-        private bool _isInitialize = false;
         
         public GameStateEnemyCard(IGameStateEnemyCardView enemyCardView, 
             IGameStateEnemyCardGUI gui,

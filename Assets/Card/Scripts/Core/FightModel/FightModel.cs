@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TheaCard.Core.Heroes;
 using TheaCard.Core.Enums;
 
@@ -6,6 +7,8 @@ namespace TheaCard.Core.FightModel
 {
     public sealed class FightModel : IFightModel
     {
+        public event Action OnEndFight;
+        
         private IHeroesFightModel _player = new HeroesFightModel();
         private IHeroesFightModel _enemy = new HeroesFightModel();
         private List<IHeroModel> _heroesBoard = new List<IHeroModel>();
@@ -26,8 +29,10 @@ namespace TheaCard.Core.FightModel
             _heroesBoard.Remove(heroModel);
         }
 
-        public void ClearAllInfo()
+        public void EndFight()
         {
+            OnEndFight?.Invoke();
+            
             Enemy.ClearAllHeroModel();
             Enemy.ClearAllHeroConfig();
             

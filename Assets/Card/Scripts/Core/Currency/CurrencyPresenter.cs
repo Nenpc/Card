@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
+using TheaCard.Core.Enums;
+using TheaCard.Infrastructure.ScreenDealer;
 
 namespace TheaCard.Core.Currency
 {
-    public sealed class CurrencyPresenter : ICurrencyPresenter
+    public sealed class CurrencyPresenter : ICurrencyPresenter, IAdditionalScreen<AdditionalScreens>
     {
         private readonly ICurrencyModel _currencyModel;
         private readonly ICurrencyGUIController _currencyGUIController;
         
         private IReadOnlyList<CurrencyInfo> _startCurrencies = new List<CurrencyInfo>();
+        
+        public AdditionalScreens ScreenType => AdditionalScreens.Currency;
         
         public CurrencyPresenter(ICurrencyModel currencyModel, 
             ICurrencyGUIController currencyGUIController)
@@ -53,12 +57,12 @@ namespace TheaCard.Core.Currency
             _currencyGUIController.UpdateCurrencyInfo(currencyType, _currencyModel.CurrencyInfos[currencyType]);
         }
         
-        public void ShowPanel()
+        public void Show()
         {
             _currencyGUIController.ShowPanel();
         }
 
-        public void HidePanel()
+        public void Hide()
         {
             _currencyGUIController.HidePanel(); 
         }

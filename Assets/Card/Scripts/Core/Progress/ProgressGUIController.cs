@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TheaCard.Core.Enums;
 
 namespace TheaCard.Core.Progress
 {
@@ -22,7 +23,7 @@ namespace TheaCard.Core.Progress
             _progressGUI.OnShowButtonClick += ShowPopup;
         }
 
-        private void HidePopup()
+        public void HidePopup()
         {
             _progressGUI.HidePopup();
         }

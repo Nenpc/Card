@@ -1,4 +1,4 @@
-﻿namespace TheaCard.Core.Buff
+﻿namespace TheaCard.Core.Enums
 {
     public enum BuffType
     {

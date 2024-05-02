@@ -1,4 +1,5 @@
-﻿using TheaCard.Core.Buff;
+﻿using System;
+using TheaCard.Core.Buff;
 using TheaCard.Core.Enums;
 using UnityEngine;
 
@@ -6,6 +7,9 @@ namespace TheaCard.Core.Heroes
 {
     public interface IHeroModel
     {
+        event Action<IHeroModel> OnDeath;
+        event Action<IHeroModel, int> OnTakeDamage;
+        
         public IHeroConfig Def { get; }
         public string Name { get; }
         public Sprite Icon { get; }

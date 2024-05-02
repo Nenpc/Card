@@ -1,4 +1,4 @@
-﻿namespace TheaCard.Core.Progress
+﻿namespace TheaCard.Core.Enums
 {
     public enum ProgressTypes
     {

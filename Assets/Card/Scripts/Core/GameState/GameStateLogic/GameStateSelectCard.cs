@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using TheaCard.Code.ScreenDealer;
 using TheaCard.Core.Card;
 using TheaCard.Core.Currency;
 using TheaCard.Core.FightModel;
@@ -21,6 +22,7 @@ namespace TheaCard.Core.GameState
         private readonly IHeroesConfig _heroesConfig;
         private readonly IFightModel _fightModel;
         private readonly ICurrencyPresenter _currencyPresenter;
+        private readonly IAdditionalScreenDealer _screenDealer;
         private readonly ICardViewFactory<IHeroConfig, ICardSelectView> _cardViewFactory;
         
         public GameStateSelectCard(IGameStateSelectCardView view, 
@@ -28,6 +30,7 @@ namespace TheaCard.Core.GameState
             IHeroesConfig heroesConfig,
             IFightModel fightModel,
             ICurrencyPresenter currencyPresenter,
+            IAdditionalScreenDealer screenDealer,
             ICardViewFactory<IHeroConfig, ICardSelectView> cardViewFactory)
         {
             _view = view;
@@ -39,6 +42,7 @@ namespace TheaCard.Core.GameState
             _heroesConfig = heroesConfig;
             _fightModel = fightModel;
             _currencyPresenter = currencyPresenter;
+            _screenDealer = screenDealer;
             _cardViewFactory = cardViewFactory;
         }
         
@@ -78,14 +82,14 @@ namespace TheaCard.Core.GameState
             
             _gui.Show();
             _view.Show();
-            _currencyPresenter.ShowPanel();
+            _screenDealer.ShowScreen(AdditionalScreens.Currency);
         }
 
         public void End()
         {
             _gui.Hide();
             _view.Hide();
-            _currencyPresenter.HidePanel();
+            _screenDealer.HideScreen(AdditionalScreens.Currency);
         }
 
         public void Dispose()

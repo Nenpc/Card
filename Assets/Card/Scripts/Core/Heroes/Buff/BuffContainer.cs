@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TheaCard.Core.Enums;
 using UnityEngine;
 
 namespace TheaCard.Core.Buff

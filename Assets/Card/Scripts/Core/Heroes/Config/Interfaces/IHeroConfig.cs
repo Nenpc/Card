@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TheaCard.Core.Buff;
+using TheaCard.Core.Enums;
 using UnityEngine;
 
 namespace TheaCard.Core.Heroes

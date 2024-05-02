@@ -1,11 +1,7 @@
 {
-    "name": "TheaCard.Core.FightModel",
+    "name": "TheaCard.Infrastructure.ScreenDealer",
     "rootNamespace": "",
-    "references": [
-        "GUID:ce323acc0252e2848b8340a8b6c7af56",
-        "GUID:f6a93ebec9faf6247b68953d7cbe64c9",
-        "GUID:6c51692b637165d449311df253d7528d"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
